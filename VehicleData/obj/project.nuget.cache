@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "AwnEzH2XrOY=",
+  "success": true,
+  "projectFilePath": "E:\\Forge\\Backend\\VehicleFunction\\VehicleData\\VehicleData.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\huytg\\.nuget\\packages\\awssdk.core\\3.7.400.59\\awssdk.core.3.7.400.59.nupkg.sha512",
+    "C:\\Users\\huytg\\.nuget\\packages\\awssdk.dynamodbv2\\3.7.404\\awssdk.dynamodbv2.3.7.404.nupkg.sha512",
+    "C:\\Users\\huytg\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.36\\microsoft.windowsdesktop.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\huytg\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.36\\microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\huytg\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.36\\microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512"
+  ],
+  "logs": []
+}

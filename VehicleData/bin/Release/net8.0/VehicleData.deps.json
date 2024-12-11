@@ -1,0 +1,59 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "VehicleData/1.0.0": {
+        "dependencies": {
+          "AWSSDK.DynamoDBv2": "3.7.404"
+        },
+        "runtime": {
+          "VehicleData.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.7.400.59": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.400.59"
+          }
+        }
+      },
+      "AWSSDK.DynamoDBv2/3.7.404": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.400.59"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.DynamoDBv2.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.404.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "VehicleData/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AWSSDK.Core/3.7.400.59": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JpF1RLRti7AJsN3Y8kbmKhZ7Q0/6wujYrxYIF0A22CJB9ndYJ95TgKmcV/7KLmrG9AFH3cwJ1HEv6jsCpteveQ==",
+      "path": "awssdk.core/3.7.400.59",
+      "hashPath": "awssdk.core.3.7.400.59.nupkg.sha512"
+    },
+    "AWSSDK.DynamoDBv2/3.7.404": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qdfCnbV5jmh9VrwIZLwqeRiBRT3S4cagiVjuWC0auWbUrl/XZA7jhdRryh+Ctx+EddREhvN25fJb7iC57ZLXVA==",
+      "path": "awssdk.dynamodbv2/3.7.404",
+      "hashPath": "awssdk.dynamodbv2.3.7.404.nupkg.sha512"
+    }
+  }
+}

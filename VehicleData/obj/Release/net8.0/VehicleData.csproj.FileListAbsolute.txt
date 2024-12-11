@@ -1,0 +1,12 @@
+E:\Forge\Backend\VehicleFunction\VehicleData\bin\Release\net8.0\VehicleData.deps.json
+E:\Forge\Backend\VehicleFunction\VehicleData\bin\Release\net8.0\VehicleData.dll
+E:\Forge\Backend\VehicleFunction\VehicleData\bin\Release\net8.0\VehicleData.pdb
+E:\Forge\Backend\VehicleFunction\VehicleData\obj\Release\net8.0\VehicleData.csproj.AssemblyReference.cache
+E:\Forge\Backend\VehicleFunction\VehicleData\obj\Release\net8.0\VehicleData.GeneratedMSBuildEditorConfig.editorconfig
+E:\Forge\Backend\VehicleFunction\VehicleData\obj\Release\net8.0\VehicleData.AssemblyInfoInputs.cache
+E:\Forge\Backend\VehicleFunction\VehicleData\obj\Release\net8.0\VehicleData.AssemblyInfo.cs
+E:\Forge\Backend\VehicleFunction\VehicleData\obj\Release\net8.0\VehicleData.csproj.CoreCompileInputs.cache
+E:\Forge\Backend\VehicleFunction\VehicleData\obj\Release\net8.0\VehicleData.dll
+E:\Forge\Backend\VehicleFunction\VehicleData\obj\Release\net8.0\refint\VehicleData.dll
+E:\Forge\Backend\VehicleFunction\VehicleData\obj\Release\net8.0\VehicleData.pdb
+E:\Forge\Backend\VehicleFunction\VehicleData\obj\Release\net8.0\ref\VehicleData.dll

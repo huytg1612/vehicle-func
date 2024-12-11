@@ -1,0 +1,753 @@
+{
+  "E:\\Forge\\Backend\\VehicleFunction": {
+    "versionSfCore": null,
+    "versionFramework": "4.4.15",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeResolverProviders": {
+      "default-aws-credential-resolver": "<REDACTED>",
+      "sls": {
+        "instance": {
+          "credentials": "<REDACTED>",
+          "serviceConfigFile": {
+            "org": "huyyy",
+            "service": "VehicleGateway",
+            "provider": {
+              "name": "aws",
+              "runtime": "dotnet8",
+              "region": "ap-southeast-1",
+              "stage": "dev",
+              "versionFunctions": true,
+              "compiledCloudFormationTemplate": {
+                "AWSTemplateFormatVersion": "2010-09-09",
+                "Description": "The AWS CloudFormation template for this Serverless application",
+                "Resources": {
+                  "GetVehicleLogGroup": {
+                    "Type": "AWS::Logs::LogGroup",
+                    "Properties": {
+                      "LogGroupName": "/aws/lambda/VehicleGateway-dev-getVehicle"
+                    }
+                  },
+                  "IamRoleLambdaExecution": {
+                    "Type": "AWS::IAM::Role",
+                    "Properties": {
+                      "AssumeRolePolicyDocument": {
+                        "Version": "2012-10-17",
+                        "Statement": [
+                          {
+                            "Effect": "Allow",
+                            "Principal": {
+                              "Service": [
+                                "lambda.amazonaws.com"
+                              ]
+                            },
+                            "Action": [
+                              "sts:AssumeRole"
+                            ]
+                          }
+                        ]
+                      },
+                      "Policies": [
+                        {
+                          "PolicyName": {
+                            "Fn::Join": [
+                              "-",
+                              [
+                                "VehicleGateway",
+                                "dev",
+                                "lambda"
+                              ]
+                            ]
+                          },
+                          "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "logs:CreateLogStream",
+                                  "logs:CreateLogGroup",
+                                  "logs:TagResource"
+                                ],
+                                "Resource": [
+                                  {
+                                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/VehicleGateway-dev*:*"
+                                  }
+                                ]
+                              },
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "logs:PutLogEvents"
+                                ],
+                                "Resource": [
+                                  {
+                                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/VehicleGateway-dev*:*:*"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "Path": "/",
+                      "RoleName": {
+                        "Fn::Join": [
+                          "-",
+                          [
+                            "VehicleGateway",
+                            "dev",
+                            {
+                              "Ref": "AWS::Region"
+                            },
+                            "lambdaRole"
+                          ]
+                        ]
+                      }
+                    }
+                  },
+                  "GetVehicleLambdaFunction": {
+                    "Type": "AWS::Lambda::Function",
+                    "Properties": {
+                      "Code": {
+                        "S3Bucket": "serverless-framework-deployments-ap-southeast-1-03fec1af-68a3",
+                        "S3Key": "serverless/VehicleGateway/dev/1733920803926-2024-12-11T12:40:03.926Z/net8.0.zip"
+                      },
+                      "Handler": "FetchFunc::FetchFunc.Function::FunctionHandler",
+                      "Runtime": "dotnet8",
+                      "FunctionName": "VehicleGateway-dev-getVehicle",
+                      "MemorySize": 1024,
+                      "Timeout": 6,
+                      "Role": {
+                        "Fn::GetAtt": [
+                          "IamRoleLambdaExecution",
+                          "Arn"
+                        ]
+                      }
+                    },
+                    "DependsOn": [
+                      "GetVehicleLogGroup"
+                    ]
+                  },
+                  "GetVehicleLambdaVersionKdHH8tPQbsoC0GjS9AUiXxTPL6UzmL3sGgcvcj6Y": {
+                    "Type": "AWS::Lambda::Version",
+                    "DeletionPolicy": "Retain",
+                    "Properties": {
+                      "FunctionName": {
+                        "Ref": "GetVehicleLambdaFunction"
+                      },
+                      "CodeSha256": "oWeO2N1Gaf7KVB50c/eTYk6MwCdyTecUjy2LeBwRkR0="
+                    }
+                  },
+                  "ApiGatewayRestApi": {
+                    "Type": "AWS::ApiGateway::RestApi",
+                    "Properties": {
+                      "Name": "dev-VehicleGateway",
+                      "EndpointConfiguration": {
+                        "Types": [
+                          "EDGE"
+                        ]
+                      },
+                      "Policy": ""
+                    }
+                  },
+                  "ApiGatewayResourceGetDashvehicle": {
+                    "Type": "AWS::ApiGateway::Resource",
+                    "Properties": {
+                      "ParentId": {
+                        "Fn::GetAtt": [
+                          "ApiGatewayRestApi",
+                          "RootResourceId"
+                        ]
+                      },
+                      "PathPart": "get-vehicle",
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      }
+                    }
+                  },
+                  "ApiGatewayMethodGetDashvehicleGet": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "HttpMethod": "GET",
+                      "RequestParameters": {},
+                      "ResourceId": {
+                        "Ref": "ApiGatewayResourceGetDashvehicle"
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "ApiKeyRequired": "<REDACTED>",
+                      "AuthorizationType": "NONE",
+                      "Integration": {
+                        "IntegrationHttpMethod": "POST",
+                        "Type": "AWS_PROXY",
+                        "Uri": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":apigateway:",
+                              {
+                                "Ref": "AWS::Region"
+                              },
+                              ":lambda:path/2015-03-31/functions/",
+                              {
+                                "Fn::GetAtt": [
+                                  "GetVehicleLambdaFunction",
+                                  "Arn"
+                                ]
+                              },
+                              "/invocations"
+                            ]
+                          ]
+                        }
+                      },
+                      "MethodResponses": []
+                    },
+                    "DependsOn": [
+                      "GetVehicleLambdaPermissionApiGateway"
+                    ]
+                  },
+                  "ApiGatewayDeployment1733920798962": {
+                    "Type": "AWS::ApiGateway::Deployment",
+                    "Properties": {
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "StageName": "dev"
+                    },
+                    "DependsOn": [
+                      "ApiGatewayMethodGetDashvehicleGet"
+                    ]
+                  },
+                  "GetVehicleLambdaPermissionApiGateway": {
+                    "Type": "AWS::Lambda::Permission",
+                    "Properties": {
+                      "FunctionName": {
+                        "Fn::GetAtt": [
+                          "GetVehicleLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "Action": "lambda:InvokeFunction",
+                      "Principal": "apigateway.amazonaws.com",
+                      "SourceArn": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":execute-api:",
+                            {
+                              "Ref": "AWS::Region"
+                            },
+                            ":",
+                            {
+                              "Ref": "AWS::AccountId"
+                            },
+                            ":",
+                            {
+                              "Ref": "ApiGatewayRestApi"
+                            },
+                            "/*/*"
+                          ]
+                        ]
+                      }
+                    }
+                  }
+                },
+                "Outputs": {
+                  "ServerlessDeploymentBucketName": {
+                    "Value": "serverless-framework-deployments-ap-southeast-1-03fec1af-68a3",
+                    "Export": {
+                      "Name": "sls-VehicleGateway-dev-ServerlessDeploymentBucketName"
+                    }
+                  },
+                  "GetVehicleLambdaFunctionQualifiedArn": {
+                    "Description": "Current Lambda function version",
+                    "Value": {
+                      "Ref": "GetVehicleLambdaVersionKdHH8tPQbsoC0GjS9AUiXxTPL6UzmL3sGgcvcj6Y"
+                    },
+                    "Export": {
+                      "Name": "sls-VehicleGateway-dev-GetVehicleLambdaFunctionQualifiedArn"
+                    }
+                  },
+                  "ServiceEndpoint": {
+                    "Description": "URL of the service endpoint",
+                    "Value": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "https://",
+                          {
+                            "Ref": "ApiGatewayRestApi"
+                          },
+                          ".execute-api.",
+                          {
+                            "Ref": "AWS::Region"
+                          },
+                          ".",
+                          {
+                            "Ref": "AWS::URLSuffix"
+                          },
+                          "/dev"
+                        ]
+                      ]
+                    },
+                    "Export": {
+                      "Name": "sls-VehicleGateway-dev-ServiceEndpoint"
+                    }
+                  }
+                }
+              },
+              "vpc": {}
+            },
+            "package": {
+              "individually": true,
+              "artifactsS3KeyDirname": "serverless/VehicleGateway/dev/code-artifacts",
+              "deploymentBucket": "serverless-framework-deployments-ap-southeast-1-03fec1af-68a3",
+              "artifactDirectoryName": "serverless/VehicleGateway/dev/1733920803926-2024-12-11T12:40:03.926Z"
+            },
+            "functions": {
+              "getVehicle": {
+                "handler": "FetchFunc::FetchFunc.Function::FunctionHandler",
+                "package": {
+                  "artifact": "FetchFunc/bin/Release/net8.0/net8.0.zip"
+                },
+                "events": [
+                  {
+                    "http": {
+                      "path": "get-vehicle",
+                      "method": "get",
+                      "integration": "AWS_PROXY"
+                    }
+                  }
+                ],
+                "name": "VehicleGateway-dev-getVehicle",
+                "memory": 1024,
+                "timeout": 6,
+                "runtime": "dotnet8",
+                "vpc": {},
+                "versionLogicalId": "GetVehicleLambdaVersionKdHH8tPQbsoC0GjS9AUiXxTPL6UzmL3sGgcvcj6Y"
+              }
+            }
+          },
+          "configFileDirPath": "E:\\Forge\\Backend\\VehicleFunction",
+          "config": {
+            "type": "sls"
+          },
+          "options": {
+            "aws-profile": "VisualStudioProfile"
+          },
+          "stage": "dev",
+          "dashboard": null,
+          "logger": {
+            "namespace": "s:core:resolver:sls",
+            "prefix": null,
+            "prefixColor": null
+          },
+          "_credentialsPromise": "<REDACTED>"
+        },
+        "resolvers": {}
+      }
+    },
+    "composeServiceName": null,
+    "servicePath": "E:\\Forge\\Backend\\VehicleFunction",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "org": "huyyy",
+      "service": "VehicleGateway",
+      "provider": {
+        "name": "aws",
+        "runtime": "dotnet8",
+        "region": "ap-southeast-1",
+        "stage": "dev",
+        "versionFunctions": true,
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {
+            "GetVehicleLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/VehicleGateway-dev-getVehicle"
+              }
+            },
+            "IamRoleLambdaExecution": {
+              "Type": "AWS::IAM::Role",
+              "Properties": {
+                "AssumeRolePolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Principal": {
+                        "Service": [
+                          "lambda.amazonaws.com"
+                        ]
+                      },
+                      "Action": [
+                        "sts:AssumeRole"
+                      ]
+                    }
+                  ]
+                },
+                "Policies": [
+                  {
+                    "PolicyName": {
+                      "Fn::Join": [
+                        "-",
+                        [
+                          "VehicleGateway",
+                          "dev",
+                          "lambda"
+                        ]
+                      ]
+                    },
+                    "PolicyDocument": {
+                      "Version": "2012-10-17",
+                      "Statement": [
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:CreateLogStream",
+                            "logs:CreateLogGroup",
+                            "logs:TagResource"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/VehicleGateway-dev*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:PutLogEvents"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/VehicleGateway-dev*:*:*"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "Path": "/",
+                "RoleName": {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      "VehicleGateway",
+                      "dev",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      "lambdaRole"
+                    ]
+                  ]
+                }
+              }
+            },
+            "GetVehicleLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-ap-southeast-1-03fec1af-68a3",
+                  "S3Key": "serverless/VehicleGateway/dev/1733920803926-2024-12-11T12:40:03.926Z/net8.0.zip"
+                },
+                "Handler": "FetchFunc::FetchFunc.Function::FunctionHandler",
+                "Runtime": "dotnet8",
+                "FunctionName": "VehicleGateway-dev-getVehicle",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "GetVehicleLogGroup"
+              ]
+            },
+            "GetVehicleLambdaVersionKdHH8tPQbsoC0GjS9AUiXxTPL6UzmL3sGgcvcj6Y": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "GetVehicleLambdaFunction"
+                },
+                "CodeSha256": "oWeO2N1Gaf7KVB50c/eTYk6MwCdyTecUjy2LeBwRkR0="
+              }
+            },
+            "ApiGatewayRestApi": {
+              "Type": "AWS::ApiGateway::RestApi",
+              "Properties": {
+                "Name": "dev-VehicleGateway",
+                "EndpointConfiguration": {
+                  "Types": [
+                    "EDGE"
+                  ]
+                },
+                "Policy": ""
+              }
+            },
+            "ApiGatewayResourceGetDashvehicle": {
+              "Type": "AWS::ApiGateway::Resource",
+              "Properties": {
+                "ParentId": {
+                  "Fn::GetAtt": [
+                    "ApiGatewayRestApi",
+                    "RootResourceId"
+                  ]
+                },
+                "PathPart": "get-vehicle",
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodGetDashvehicleGet": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "GET",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceGetDashvehicle"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "GetVehicleLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "GetVehicleLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayDeployment1733920798962": {
+              "Type": "AWS::ApiGateway::Deployment",
+              "Properties": {
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "StageName": "dev"
+              },
+              "DependsOn": [
+                "ApiGatewayMethodGetDashvehicleGet"
+              ]
+            },
+            "GetVehicleLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "GetVehicleLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            }
+          },
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": "serverless-framework-deployments-ap-southeast-1-03fec1af-68a3",
+              "Export": {
+                "Name": "sls-VehicleGateway-dev-ServerlessDeploymentBucketName"
+              }
+            },
+            "GetVehicleLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "GetVehicleLambdaVersionKdHH8tPQbsoC0GjS9AUiXxTPL6UzmL3sGgcvcj6Y"
+              },
+              "Export": {
+                "Name": "sls-VehicleGateway-dev-GetVehicleLambdaFunctionQualifiedArn"
+              }
+            },
+            "ServiceEndpoint": {
+              "Description": "URL of the service endpoint",
+              "Value": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "https://",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    ".execute-api.",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ".",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    },
+                    "/dev"
+                  ]
+                ]
+              },
+              "Export": {
+                "Name": "sls-VehicleGateway-dev-ServiceEndpoint"
+              }
+            }
+          }
+        },
+        "vpc": {}
+      },
+      "package": {
+        "individually": true,
+        "artifactsS3KeyDirname": "serverless/VehicleGateway/dev/code-artifacts",
+        "deploymentBucket": "serverless-framework-deployments-ap-southeast-1-03fec1af-68a3",
+        "artifactDirectoryName": "serverless/VehicleGateway/dev/1733920803926-2024-12-11T12:40:03.926Z"
+      },
+      "functions": {
+        "getVehicle": {
+          "handler": "FetchFunc::FetchFunc.Function::FunctionHandler",
+          "package": {
+            "artifact": "FetchFunc/bin/Release/net8.0/net8.0.zip"
+          },
+          "events": [
+            {
+              "http": {
+                "path": "get-vehicle",
+                "method": "get",
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "name": "VehicleGateway-dev-getVehicle",
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "dotnet8",
+          "vpc": {},
+          "versionLogicalId": "GetVehicleLambdaVersionKdHH8tPQbsoC0GjS9AUiXxTPL6UzmL3sGgcvcj6Y"
+        }
+      }
+    },
+    "serviceRawFile": "# \"org\" ensures this Service is used with the correct Serverless Framework Access Key.\r\norg: huyyy\r\n# Welcome to Serverless!\r\n#\r\n# This file is the main config file for your service.\r\n# It's very minimal at this point and uses default values.\r\n# You can always add more config options for more control.\r\n# We've included some commented out config examples here.\r\n# Just uncomment any of them to get that config option.\r\n#\r\n# For full config options, check the docs:\r\n#    docs.serverless.com\r\n#\r\n# Happy Coding!\r\n\r\nservice: VehicleGateway # NOTE: update this with your service name\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: dotnet8\r\n  region: ap-southeast-1\r\n\r\npackage:\r\n  individually: true\r\n\r\nfunctions:\r\n  getVehicle:\r\n    handler: FetchFunc::FetchFunc.Function::FunctionHandler\r\n    package:\r\n      artifact: FetchFunc/bin/Release/net8.0/net8.0.zip\r\n\r\n    events:\r\n      - http:\r\n          path: get-vehicle\r\n          method: get\r\n#   getquerystring:\r\n#     handler: AwsDotnetCsharp::AwsDotnetCsharp.Handler::GetQuerystring\r\n\r\n#     package:\r\n#       artifact: bin/release/net6.0/hello.zip\r\n#     events:\r\n#       - http:\r\n#           path: getquerystring\r\n#           method: get",
+    "command": [
+      "deploy"
+    ],
+    "options": {
+      "aws-profile": "VisualStudioProfile"
+    },
+    "error": null,
+    "params": {},
+    "machineId": "fbe2c096a5956f918a245f656d758509",
+    "stage": "dev",
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "987c30af-601e-446b-81c9-332a64197456",
+    "orgName": "huyyy",
+    "userId": "J6Ty2js43K0lqkMvTS",
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "userName": "huyyy",
+    "subscription": null,
+    "userEmail": "huytg1612@gmail.com",
+    "serviceProviderAwsRegion": "ap-southeast-1",
+    "serviceProviderAwsCredentials": "<REDACTED>",
+    "serviceProviderAwsAccountId": "560176329885",
+    "projectType": "traditional",
+    "versionSf": "4.4.15",
+    "serviceProviderAwsCfStackName": "VehicleGateway-dev",
+    "integrations": {},
+    "serviceUniqueId": "arn:aws:cloudformation:ap-southeast-1:560176329885:stack/VehicleGateway-dev/0e044ec0-b7bd-11ef-a74f-0609476bb8d1",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:ap-southeast-1:560176329885:stack/VehicleGateway-dev/0e044ec0-b7bd-11ef-a74f-0609476bb8d1",
+    "serviceProviderAwsCfStackCreated": "2024-12-11T12:40:09.190Z",
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": "CREATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": [
+      {
+        "OutputKey": "GetVehicleLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:ap-southeast-1:560176329885:function:VehicleGateway-dev-getVehicle:1",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-VehicleGateway-dev-GetVehicleLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "ServiceEndpoint",
+        "OutputValue": "https://9p1j90ly2j.execute-api.ap-southeast-1.amazonaws.com/dev",
+        "Description": "URL of the service endpoint",
+        "ExportName": "sls-VehicleGateway-dev-ServiceEndpoint"
+      },
+      {
+        "OutputKey": "ServerlessDeploymentBucketName",
+        "OutputValue": "serverless-framework-deployments-ap-southeast-1-03fec1af-68a3",
+        "ExportName": "sls-VehicleGateway-dev-ServerlessDeploymentBucketName"
+      }
+    ]
+  }
+}
